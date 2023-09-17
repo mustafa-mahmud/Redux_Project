@@ -6,13 +6,17 @@ import { getCartItems } from './redux/slices/cartSlice.js';
 function App() {
   const dispatch = useDispatch();
   const { isOpen } = useSelector((store) => store.modal);
-  const { errMsg } = useSelector((store) => store.cart);
+  const { errMsg, isLoading } = useSelector((store) => store.cart);
 
   useEffect(() => {
     dispatch(getCartItems('John Doe'));
   }, []);
 
   //////////////////////////////////////////////////
+  if (isLoading) {
+    return <h2>Loading...</h2>;
+  }
+
   if (errMsg) {
     return <h2>{errMsg}</h2>;
   }
